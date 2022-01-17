@@ -1,42 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Cantarell&display=swap');
+
 /* Used to help with formatting */
 body {
     border-style: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: #ededee;
+    padding: 0;
+    font-family: 'Cantarell', sans-serif;
 }
-body header, body section, body aside {
-    border: solid 1px black;
+body section, body aside {
+    /* border: solid 1px black; */
 }
 
+/* Styling header*/
 header {
     position: fixed;
     width: 100%;
     height: 7vh;
     z-index: 1;
+    background-color: white;
+    padding-bottom: 3vh;
+}
+header h1 {
+    margin-left: 3vh;
+}
+
+/* nav bar text */
+#header-text * {
+    display: inline-flex;
+}
+
+#header-right {
+    float: right;
+}
+
+#header-right a {
+    padding: 4vh 2vh;
+    font-weight: bolder;
+}
+
+#signout {
+    color: cornflowerblue;
 }
 
 /* Styling main blocks */
 main {
-    display: flex;
-    flex-direction: column;
+    background-color: #ededee;
+    align-items: flex-end;
 }
 
+/* styles the cards generally */
 main section {
-    height: 30vw;
-    width: 30vw;
-    margin: 10% 15% 5% 15%;
+    /* sizes the card and determines placement */
+    height: 70vw;
+    width: 60vw;
+    margin: 3%;
+    margin-left: 10vw;
+    background-color: white;
+}
+
+/* Individual Cards */
+#stories {
+    margin-top: 12vh;
+    height: 7vh;
 }
 
 /* Recommendations, they disappear on iphones */
 #recommendations {
-    background-color: grey;
+    background-color: #ededee;
     position: fixed;
-    top: 8vh;
+    top: 10vh;
     right: 0;
     width: 40vw;
     height: 100vh;
+    z-index: 1;
+    padding-left: 2vw;
+    padding-top: 3vh;
 }
-
+#recommendations > h3 {
+    color: grey;
+}
+.profile {
+    display: inline-flex;
+}
+.profile h3 {
+    margin-left: 1vw;
+}
+.circular-pfp {
+    overflow: hidden;
+    border: solid 1px black;
+    border-radius: 50%;
+    width: 10vh;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+}
+.circular-pfp img {
+    height: 100%;
+}
+.pfp-wrapper {
+    height: 5vh;
+    width: 5vh;
+    overflow: hidden;
+    border-radius: 50%;
+    justify-content: center;
+}
+.suggestion * {
+    display: inline-flex;
+    vertical-align: middle;
+}
+.follow {
+    float: right;
+    margin-right: 14vh;
+    color: cornflowerblue;
+    margin-top: .1vh;
+}
+.acc-pfp {
+    height: 100%;
+}
+.user {
+    font-weight: bold;
+    margin-top: .1vh;
+}
+.user-caption {
+    margin-left: 5.6vh;
+    margin-top: -6vh;
+    font-size: 10px;
+    color: grey;
+}
+/* Updated CSS styling for iphone widths */
 @media only screen and (max-width: 844px) {
     #recommendations {
         display: none;
+    }
+    main section {
+        /* sizes the card and determines palcement*/
+        margin: 2% calc(20vw / 2);
+        height: 90vw;
+        width: 80vw;
     }
 }
