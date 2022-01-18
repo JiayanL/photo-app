@@ -5,87 +5,292 @@
     <title>Flexagram</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css"> 
+    <script src="https://kit.fontawesome.com/97cb4d7caf.js" crossorigin="anonymous"></script>
 </head>
     
 <body>
+<!-- Header -->
     <header>
        <div id="header-text">
+           <!-- Container to hold left side of header-->
            <div id="header-left">
-               <h1>Flexagram</h1>
+               <!--Container to manipulate logo-->
+               <div class="logo-container">
+                    <h1>Flexagram</h1>
+               </div>
            </div>
+           <!--Container to hold right elements-->
            <div id = "header-right">
-                <a>jiayan</a>
-                <a id="signout">Sign out</a>
+                <a href="#" id="username">jiayan</a>
+                <a href="#" id="signout">Sign out</a>
            </div>
        </div>
     </header>
 
     <main>
         <section id="stories">
-            <h1>Stories</h1>
+            <!--This is a module for a story-->
+            <div class="story">
+                <div class="story-img-wrapper">
+                    <img src="https://thedogepoundnft.com/static/media/28.a5283673.png">
+                </div>
+                <a href="#" class="story-username">ireneD</a>
+            </div>
+            <div class="story">
+                <div class="story-img-wrapper">
+                    <img src="https://lh3.googleusercontent.com/JGmIXSML282cVOUWdB4oboGS3-xofXV0NEOKwnjmINv_3VoONMRoB8H2qm2uJ2G5Dy3f5CPfNJ-mXleQOIL8x_7iJgFw0ovCrXf5Qg=w335">
+                </div>
+                <a href="#" class="story-username">balajis</a>
+            </div>
+            <div class="story">
+                <div class="story-img-wrapper">
+                    <img src="https://lh3.googleusercontent.com/3JWSITJETJAvxTaCzI-aEPsVUCcPRRXrU12wJ5q9YO_huBPdICVtfQq8RP23bDC_4lTdj7Yfi9lFIgPSIYqy6K_JNOSXmAHz0Z1e=w335">
+                </div>
+                <a href="#" class="story-username">sydeFX</a>
+            </div>
+            <div class="story">
+                <div class="story-img-wrapper">
+                    <img src="https://lh3.googleusercontent.com/5U0ZSpM48ydf88zDTyM40Sn3I0ivxp8PqOqK82V8NJgkYT6JQcpYTqWFmmd67FAuAlX7rEwmf9ok6xtznAh9NnjpVatSnixbeCCE=w335">
+                </div>
+                <a href="#" class="story-username">gGoblin</a>
+            </div>
+            <div class="story">
+                <div class="story-img-wrapper">
+                    <img src="https://lh3.googleusercontent.com/uNnhAdfEoHEPbfqE_qKcGy_ajhjaqAiIyHFADElS2341IByuMeLpNYo2FlmRch0j5q0zpUb8_uMuyIwfUU2f_Uq6bT_mLXl_MEQ9=w335">
+                </div>
+                <a href="#" class="story-username">redR0se</a>
+            </div>
         </section>
-        <section id="card1">
-            <h1>Card 1</h1>
+        <section class ="card" id="card1">
+            <div class="card-top">
+                <h2 class="post-username">appleJohn</h2>
+                <div class="menu-wrapper">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            <div class="card-img-wrapper">
+                <img src="https://media.istockphoto.com/vectors/vintage-psychedelic-trippy-colorful-fiery-mandala-yellow-orange-red-vector-id1220538456">
+            </div>
+            <div class="card-buttons">
+                <div class = "left-bookmarks">
+                    <i class="far fa-heart fa-lg"></i>
+                    <i class="far fa-comment fa-lg"></i>
+                    <i class="far fa-paper-plane fa-lg"></i>
+                </div>
+                <div class="bookmark-wrapper">
+                    <i class="far fa-bookmark fa-lg"></i>
+                </div>
+            </div>
+            <div class="comment-container">
+                <div class ="likes">
+                    <p>30 likes</p>
+                </div>
+                <div class ="comments">
+                    <p><span class='comment-user'>s_altman </span> Here is a caption about the photo. Text text text text text text text text 
+                    text text text text text text text text text text...<a class='caption-expand' href="#">more</a> </p>
+                    <p><span class='comment-user'>Yuval_H </span> wonderful post! I love it!!!!</p>
+                    <p><span class='comment-user'>rnavalkant </span>this is such a good pOSTTTT</p>
+                </div>
+                <div class="time">
+                    <p>3 DAYS AGO</p>
+                </div>
+                <hr>
+                <div class="card-buttons">
+                    <div class = "left-bookmarks">
+                        <i class="far fa-smile fa-lg"></i>
+                        <input class="comment_input" type="text-area" placeholder="Add a comment...">
+                    </div>
+                    <div class="bookmark-wrapper">
+                        <button type="button">Post</button>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section id="card2">
-            <h1>Card 2</h1>
+        <section class ="card" id="card1">
+            <div class="card-top">
+                <h2 class="post-username">appleJohn</h2>
+                <div class="menu-wrapper">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            <div class="card-img-wrapper">
+                <img src="https://media.istockphoto.com/vectors/vintage-psychedelic-trippy-colorful-fiery-mandala-yellow-orange-red-vector-id1220538456">
+            </div>
+            <div class="card-buttons">
+                <div class = "left-bookmarks">
+                    <i class="far fa-heart fa-lg"></i>
+                    <i class="far fa-comment fa-lg"></i>
+                    <i class="far fa-paper-plane fa-lg"></i>
+                </div>
+                <div class="bookmark-wrapper">
+                    <i class="far fa-bookmark fa-lg"></i>
+                </div>
+            </div>
+            <div class="comment-container">
+                <div class ="likes">
+                    <p>30 likes</p>
+                </div>
+                <div class ="comments">
+                    <p><span class='comment-user'>s_altman </span> Here is a caption about the photo. Text text text text text text text text 
+                    text text text text text text text text text text...<a class='caption-expand' href="#">more</a> </p>
+                    <p><span class='comment-user'>Yuval_H </span> wonderful post! I love it!!!!</p>
+                    <p><span class='comment-user'>rnavalkant </span>this is such a good pOSTTTT</p>
+                </div>
+                <div class="time">
+                    <p>3 DAYS AGO</p>
+                </div>
+                <hr>
+                <div class="card-buttons">
+                    <div class = "left-bookmarks">
+                        <i class="far fa-smile fa-lg"></i>
+                        <input class="comment_input" type="text-area" placeholder="Add a comment...">
+                    </div>
+                    <div class="bookmark-wrapper">
+                        <button type="button">Post</button>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section id="card3">
-            <h1>Card 3</h1>
+        <section class ="card" id="card1">
+            <div class="card-top">
+                <h2 class="post-username">appleJohn</h2>
+                <div class="menu-wrapper">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            <div class="card-img-wrapper">
+                <img src="https://media.istockphoto.com/vectors/vintage-psychedelic-trippy-colorful-fiery-mandala-yellow-orange-red-vector-id1220538456">
+            </div>
+            <div class="card-buttons">
+                <div class = "left-bookmarks">
+                    <i class="far fa-heart fa-lg"></i>
+                    <i class="far fa-comment fa-lg"></i>
+                    <i class="far fa-paper-plane fa-lg"></i>
+                </div>
+                <div class="bookmark-wrapper">
+                    <i class="far fa-bookmark fa-lg"></i>
+                </div>
+            </div>
+            <div class="comment-container">
+                <div class ="likes">
+                    <p>30 likes</p>
+                </div>
+                <div class ="comments">
+                    <p><span class='comment-user'>s_altman </span> Here is a caption about the photo. Text text text text text text text text 
+                    text text text text text text text text text text...<a class='caption-expand' href="#">more</a> </p>
+                    <p><span class='comment-user'>Yuval_H </span> wonderful post! I love it!!!!</p>
+                    <p><span class='comment-user'>rnavalkant </span>this is such a good pOSTTTT</p>
+                </div>
+                <div class="time">
+                    <p>3 DAYS AGO</p>
+                </div>
+                <hr>
+                <div class="card-buttons">
+                    <div class = "left-bookmarks">
+                        <i class="far fa-smile fa-lg"></i>
+                        <input class="comment_input" type="text-area" placeholder="Add a comment...">
+                    </div>
+                    <div class="bookmark-wrapper">
+                        <button type="button">Post</button>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section id="card4">
-            <h1>Card 4</h1>
+        <section class ="card" id="card1">
+            <div class="card-top">
+                <h2 class="post-username">appleJohn</h2>
+                <div class="menu-wrapper">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+            </div>
+            <div class="card-img-wrapper">
+                <img src="https://media.istockphoto.com/vectors/vintage-psychedelic-trippy-colorful-fiery-mandala-yellow-orange-red-vector-id1220538456">
+            </div>
+            <div class="card-buttons">
+                <div class = "left-bookmarks">
+                    <i class="far fa-heart fa-lg"></i>
+                    <i class="far fa-comment fa-lg"></i>
+                    <i class="far fa-paper-plane fa-lg"></i>
+                </div>
+                <div class="bookmark-wrapper">
+                    <i class="far fa-bookmark fa-lg"></i>
+                </div>
+            </div>
+            <div class="comment-container">
+                <div class ="likes">
+                    <p>30 likes</p>
+                </div>
+                <div class ="comments">
+                    <p><span class='comment-user'>s_altman </span> Here is a caption about the photo. Text text text text text text text text 
+                    text text text text text text text text text text...<a class='caption-expand' href="#">more</a> </p>
+                    <p><span class='comment-user'>Yuval_H </span> wonderful post! I love it!!!!</p>
+                    <p><span class='comment-user'>rnavalkant </span>this is such a good pOSTTTT</p>
+                </div>
+                <div class="time">
+                    <p>3 DAYS AGO</p>
+                </div>
+                <hr>
+                <div class="card-buttons">
+                    <div class = "left-bookmarks">
+                        <i class="far fa-smile fa-lg"></i>
+                        <input class="comment_input" type="text-area" placeholder="Add a comment...">
+                    </div>
+                    <div class="bookmark-wrapper">
+                        <button type="button">Post</button>
+                    </div>
+                </div>
+            </div>
         </section>
         <aside id="recommendations">
             <div class="profile">
                 <div class="circular-pfp">
                 <img src="https://variety.com/wp-content/uploads/2021/10/Guy-oseary-ape.jpg?w=1000" id="pfp">
                 </div>
-                <h3>jiayantheman</h3>
+                <a href="#">jiayantheman</a>
             </div>
             <h3>Suggestions for you</h3>
             <div class="suggestion">
                 <div class="pfp-wrapper">
                     <img src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/isjFotcMs.PA/v1/1200x-1.jpg" class="acc-pfp">
                 </div>
-                <p class="user">sriramK</p>
-                <p class="follow">follow</p>
+                <p class="user"><a href="#">sriramK</a></p>
+                <p class="follow"><a href="#">follow</a></p>
                 <br>
                 <p class="user-caption">suggested for you</p>
             </div>
             <div class="suggestion">
                 <div class="pfp-wrapper">
-                    <img src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/isjFotcMs.PA/v1/1200x-1.jpg" class="acc-pfp">
+                    <img src="https://preview.redd.it/qyl2kdljbrx71.jpg?width=640&crop=smart&auto=webp&s=faaec305e2389d4a92e77be05cbd332e22574c08" class="acc-pfp">
                 </div>
-                <p class="user">codingJiayan410</p>
-                <p class="follow">follow</p>
+                <p class="user"><a href="#">codingJiayan410</a></p>
+                <p class="follow"><a href="#">follow</a></p>
                 <br>
                 <p class="user-caption">suggested for you</p>
             </div>
             <div class="suggestion">
                 <div class="pfp-wrapper">
-                    <img src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/isjFotcMs.PA/v1/1200x-1.jpg" class="acc-pfp">
+                    <img src="https://techcrunch.com/wp-content/uploads/2021/12/FC3_itGXEAA6z5g.jpg?w=730&crop=1" class="acc-pfp">
                 </div>
-                <p class="user">undercoverHipster</p>
-                <p class="follow">follow</p>
+                <p class="user"><a href="#">UnderCoverHipster</a></p>
+                <p class="follow"><a href="#">follow</a></p>
                 <br>
                 <p class="user-caption">suggested for you</p>
             </div>
             <div class="suggestion">
                 <div class="pfp-wrapper">
-                    <img src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/isjFotcMs.PA/v1/1200x-1.jpg" class="acc-pfp">
+                    <img src="https://blogs.airdropalert.com/wp-content/uploads/2021/09/cool-cats-pfp-nft.png" class="acc-pfp">
                 </div>
-                <p class="user">flannelBoy</p>
-                <p class="follow">follow</p>
+                <p class="user"><a href="#">flannelBoy</a></p>
+                <p class="follow"><a href="#">follow</a></p>
                 <br>
                 <p class="user-caption">suggested for you</p>
             </div>
             <div class="suggestion">
                 <div class="pfp-wrapper">
-                    <img src="https://assets.bwbx.io/images/users/iqjWHBFdfxIU/isjFotcMs.PA/v1/1200x-1.jpg" class="acc-pfp">
+                    <img src="https://pbs.twimg.com/media/FAOCCFmVQAU55e2.jpg" class="acc-pfp">
                 </div>
-                <p class="user">pinterestJames</p>
-                <p class="follow">follow</p>
+                <p class="user"><a href="#">pinterestJames</a></p>
+                <p class="follow"><a href="#">follow</a></p>
                 <br>
                 <p class="user-caption">suggested for you</p>
             </div>
