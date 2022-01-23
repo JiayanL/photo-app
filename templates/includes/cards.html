@@ -1,0 +1,52 @@
+{% for post in posts %}
+<section class ="card" id="card1">
+    <div class="card-top">
+        <h2 class="post-username">{{post.user.get('username')}}</h2>
+        <div class="menu-wrapper">
+            <i class="fas fa-ellipsis-h"></i>
+        </div>
+    </div>
+    <div class="card-img-wrapper">
+        <img src={{post.get('image_url')}}" alt="image post for {{post.user.username}}">
+    </div>
+    <div class="card-buttons">
+        <div class = "left-bookmarks">
+            <i class="far fa-heart fa-lg"></i>
+            <i class="far fa-comment fa-lg"></i>
+            <i class="far fa-paper-plane fa-lg"></i>
+        </div>
+        <div class="bookmark-wrapper">
+            <i class="far fa-bookmark fa-lg"></i>
+        </div>
+    </div>
+    <div class="comment-container">
+        <div class ="likes">
+            <p>{{post.get('likes')}} likes</p>
+        </div>
+        <div class ="comments">
+            <p><span class='comment-user'>{{post.user.get('username')}} </span> {{post.get('title')}}...<a class='caption-expand' href="#">more</a> </p>
+            {% if (post.comments|length) > 1 %}
+                <div class="view_more">
+                <button type="button">View all {{post.comments|length}} comments</button>
+                </div>
+            {% endif %}
+            {% if (post.comments|length) > 0 %}
+                <p><span class='comment-user'>{{post.comments[0].user.get('username')}} </span>{{post.comments[0].text}}</p>
+            {% endif %}
+        </div>
+        <div class="time">
+            <p>{{post.get('display_time')}}</p>
+        </div>
+        <hr>
+        <div class="card-buttons">
+            <div class = "left-bookmarks">
+                <i class="far fa-smile fa-lg"></i>
+                <input class="comment_input" type="text-area" placeholder="Add a comment...">
+            </div>
+            <div class="bookmark-wrapper">
+                <button type="button">Post</button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}

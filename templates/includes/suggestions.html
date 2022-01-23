@@ -1,0 +1,20 @@
+<aside id="recommendations">
+    <div class="profile">
+        <div class="circular-pfp">
+            <img src= {{user.get('image_url')}} alt="profile picture for {{user.get('username')}}"id="pfp">
+        </div>
+        <a href="#">{{user.get('username')}}</a>
+    </div>
+    <h3>Suggestions for you</h3>
+    {% for profile in suggestions %}
+        <div class="suggestion">
+            <div class="pfp-wrapper">
+                <img src="{{profile.get('image_url')}}" class="acc-pfp" alt="profile picture for {{profile.get('username')}}">
+            </div>
+            <p class="user"><a href="#">{{profile.get('username')}}</a></p>
+            <p class="follow"><a href="#">follow</a></p>
+            <br>
+            <p class="user-caption">suggested for you</p>
+        </div>
+    {% endfor %}
+</aside>

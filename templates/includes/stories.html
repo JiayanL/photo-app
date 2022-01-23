@@ -1,0 +1,11 @@
+<section id="stories">
+    <!--This is a module for a story-->
+    {% for story in stories %}
+        <div class="story">
+            <div class="story-img-wrapper">
+                <img src={{story.user.get('profile_url')}} alt="story icon for {{story.user.get('username')}}"> 
+            </div>
+            <a href="#" class="story-username">{{story.user.get('username')}}</a>
+        </div>
+    {% endfor %}
+</section>

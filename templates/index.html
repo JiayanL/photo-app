@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flexagram</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css"> 
+    <script src="https://kit.fontawesome.com/97cb4d7caf.js" crossorigin="anonymous"></script>
+</head>
+    
+<body>
+<!-- Header -->
+    {% include 'includes/navbar.html' %}
+
+    <main>
+        {% include 'includes/stories.html' %}
+        {% include 'includes/cards.html' %}
+        {% include 'includes/suggestions.html' %}
+    </main>
+</body>
+</html>
+
+<!--
+    Adding Alt Text: While adding alt text on instagram is difficult because you have to navigate
+    through Advanced settings to get to the write alt text function, I would implement
+    an alt text feature by adding it as an text input space below instagram captions. That way
+    users could easily create and modify alt text while they're writing out their instagram
+    captions.
+-->
