@@ -41,10 +41,12 @@
         <div class="card-buttons">
             <div class = "left-bookmarks">
                 <i class="far fa-smile fa-lg"></i>
-                <input class="comment_input" type="text-area" placeholder="Add a comment...">
+                <label hidden for="comment_{{post.image_url}}">Add a comment...</label>
+                <input class="comment_input" type="text-area" placeholder="Add a comment..." id="comment_{{post.image_url}}">     
             </div>
             <div class="bookmark-wrapper">
-                <button type="button">Post</button>
+                <label hidden for="submit_{{post.image_url}}">button for submitting comment</label>
+                <button type="button" id="submit_{{post.image_url}}">Post</button>
             </div>
         </div>
     </div>
