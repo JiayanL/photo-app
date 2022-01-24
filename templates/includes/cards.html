@@ -27,7 +27,7 @@
             <p><span class='comment-user'>{{post.user.get('username')}} </span> {{post.get('title')}}...<a class='caption-expand' href="#">expand comment</a> </p>
             {% if (post.comments|length) > 1 %}
                 <div class="view_more">
-                <button type="button">View all {{post.comments|length}} comments</button>
+                    <button type="button">View all {{post.comments|length}} comments</button>
                 </div>
             {% endif %}
             {% if (post.comments|length) > 0 %}
