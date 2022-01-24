@@ -24,7 +24,7 @@
             <p>{{post.get('likes')}} likes</p>
         </div>
         <div class ="comments">
-            <p><span class='comment-user'>{{post.user.get('username')}} </span> {{post.get('title')}}...<a class='caption-expand' href="#">more</a> </p>
+            <p><span class='comment-user'>{{post.user.get('username')}} </span> {{post.get('title')}}...<a class='caption-expand' href="#">expand comment</a> </p>
             {% if (post.comments|length) > 1 %}
                 <div class="view_more">
                 <button type="button">View all {{post.comments|length}} comments</button>
@@ -41,11 +41,12 @@
         <div class="card-buttons">
             <div class = "left-bookmarks">
                 <i class="far fa-smile fa-lg"></i>
-                <label hidden for="comment_{{post.image_url}}">Add a comment...</label>
-                <input class="comment_input" type="text-area" placeholder="Add a comment..." id="comment_{{post.image_url}}">     
+                <label hidden for="comment_{{post.image_url}}"> Label for comment input
+                </label>
+                <input class="comment_input" type="text-area" placeholder="Add a comment..." id="comment_{{post.image_url}}">
+                <!-- <input class="comment_input" type="text-area" placeholder="Add a comment..." id="comment_{{post.image_url}}">      -->
             </div>
             <div class="bookmark-wrapper">
-                <label hidden for="submit_{{post.image_url}}">button for submitting comment</label>
                 <button type="button" id="submit_{{post.image_url}}">Post</button>
             </div>
         </div>
