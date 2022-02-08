@@ -1,4 +1,5 @@
 from models import db, Following, Post
+from sqlalchemy import and_
 
 '''
 Below are some helper functions to help you with security:
@@ -25,7 +26,7 @@ def can_view_post(post_id, user):
     auth_users_ids = get_authorized_user_ids(user)
 
     # query for all the posts that are owned by the user:
-    post = Post.query.filter(Post.id==post_id and Post.user_id.in_(auth_users_ids)).first()
+    post = Post.query.filter(and_(Post.id==post_id, Post.user_id.in_(auth_users_ids))).first()
     if not post:
         return False
     return True

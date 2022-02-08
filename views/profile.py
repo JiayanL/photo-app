@@ -12,7 +12,8 @@ class ProfileDetailEndpoint(Resource):
 
     def get(self):
         # Your code here:
-        return Response(json.dumps({}), mimetype="application/json", status=200)
+
+        return Response(json.dumps(self.current_user.to_dict()), mimetype="application/json", status=200)
 
 
 def initialize_routes(api):
