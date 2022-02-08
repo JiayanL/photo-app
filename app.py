@@ -2,12 +2,15 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 import os
 from models import db, User
 from views import bookmarks, comments, followers, following, \
     posts, profile, stories, suggestions, post_likes
+
+# Importing fake data
+import fake_data
 
 app = Flask(__name__)
 
@@ -37,8 +40,14 @@ suggestions.initialize_routes(api)
 # Server-side template for the homepage:
 @app.route('/')
 def home():
-    return 'Your API'
-
+    current_user = fake_data.generate_user()
+    return render_template(
+        'index.html', 
+        user=current_user,
+        posts=fake_data.generate_posts(n=8),
+        stories=fake_data.generate_stories(n=6),
+        suggestions=fake_data.generate_suggestions(n=7)
+    )
 
 # enables flask app to run using "python3 app.py"
 if __name__ == '__main__':
