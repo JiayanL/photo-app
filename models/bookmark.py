@@ -3,7 +3,7 @@ from . import db
 
 class Bookmark(db.Model):
     __tablename__ = 'bookmarks'
-
+    # reject insert if they're not unique
     __table_args__ = (
         db.UniqueConstraint('user_id', 'post_id'),
     )

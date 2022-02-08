@@ -10,8 +10,14 @@ class StoriesListEndpoint(Resource):
         self.current_user = current_user
     
     def get(self):
-        # Your code here:
-        return Response(json.dumps([]), mimetype="application/json", status=200)
+        # get list of users who stories you would have to see
+        authorized_users = get_authorized_user_ids(self.current_user)
+
+        # get all stories where user id is in authorized users
+        story_list = Story.query.filter(Story.user_id.in_(authorized_users)).all()
+        # turn into dictionary
+        story_list = [story.to_dict() for story in story_list]
+        return Response(json.dumps(story_list), mimetype="application/json", status=200)
 
 
 def initialize_routes(api):
