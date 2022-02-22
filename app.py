@@ -1,18 +1,20 @@
-# load the environment variables:
 from dotenv import load_dotenv
 load_dotenv()
-
-from flask import Flask, render_template
+from flask import Flask, request
 from flask_restful import Api
+from flask_cors import CORS
+from flask import render_template
 import os
-from models import db, User
+from models import db, User, ApiNavigator
 from views import bookmarks, comments, followers, following, \
     posts, profile, stories, suggestions, post_likes
 
-# Importing fake data
-import fake_data
+
 
 app = Flask(__name__)
+
+# CORS: allows anyone from anywhere to use your API:
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False    
@@ -37,17 +39,26 @@ profile.initialize_routes(api)
 stories.initialize_routes(api)
 suggestions.initialize_routes(api)
 
+
 # Server-side template for the homepage:
 @app.route('/')
 def home():
-    current_user = fake_data.generate_user()
     return render_template(
-        'index.html', 
-        user=current_user,
-        posts=fake_data.generate_posts(n=8),
-        stories=fake_data.generate_stories(n=6),
-        suggestions=fake_data.generate_suggestions(n=7)
+        'starter-client.html', 
+        user=app.current_user
     )
+
+@app.route('/api')
+def api_docs():
+    navigator = ApiNavigator(app.current_user)
+    return render_template(
+        'api/api-docs.html', 
+        user=app.current_user,
+        endpoints=navigator.get_endpoints(),
+        url_root=request.url_root[0:-1] # trim trailing slash
+    )
+
+
 
 # enables flask app to run using "python3 app.py"
 if __name__ == '__main__':
