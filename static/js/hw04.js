@@ -66,16 +66,49 @@ const post2Html = post => {
                 <p class="likes"><strong>${ post.likes.length } like${ post.likes.length != 1 ? 's' : '' }</strong></p>
                 <div class="caption">
                     <p>
-                        <strong>${ post.user.username }}</strong> 
+                        <strong>${ post.user.username }</strong> 
                         ${ post.caption }
                     </p>
                 </div>
+                <div class="comments">
+                    ${ displayComments(post.comments) }
+                </div>
             </div>
-            TODO: # of likes, captions, comments, add
         </section>
     `;
 };
 
+// display comments of a post
+const displayComments = comments => {
+    // if more than one comment, show a button and the last comment below button
+    // otherwise show a single comment if it exists
+    // also possible to show 0 comments
+    let html = '';
+    if (comments.length > 1) {
+        html += `
+            <button class="link">view all ${comments.length} comments</button>
+            `;
+    }
+    if (comments && comments.length > 0) {
+        const lastComment = comments[comments.length - 1]
+        html += `
+            <p>
+                <strong>${ lastComment.user.username }</strong>
+                ${lastComment.text}
+            </p>
+            <div>${lastComment.display_time}</div>
+            `
+    }
+    html += `
+        <div class="add-comment">
+            <div class="input-holder">
+                <input type="text" aria-label="Add a comment" placeholder="Add a comment...">
+            </div>
+            <button class="link">Post</button>
+        </div>
+    `
+    return html
+};
 /*
                 <div class="comments">
                     {% if post.get('comments')|length > 1 %}
