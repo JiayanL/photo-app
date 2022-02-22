@@ -71,22 +71,43 @@ const post2Html = post => {
                     </p>
                 </div>
                 <div class="comments">
-                    ${ displayComments(post.comments) }
+                    ${ displayComments(post.comments, post.id) }
                 </div>
             </div>
         </section>
     `;
 };
 
+// close modal after hitting button
+const destroyModal = ev => {
+    document.querySelector('#modal-container').innerHTML = "";
+};
+// display modal view of a post after clicking view comments
+const showPostDetail = ev => {
+    const postId = ev.currentTarget.dataset.postId;
+    fetch(`/api/posts/${postId}`)
+        .then(response => response.json())
+        .then(post => {
+            const html = `
+                <div class="modal-bg">
+                    <button onClick="destroyModal(event)">Close</button>
+                    <div class="modal">
+                        <img src="${post.image_url}">
+                    </div>
+                </div>`;
+            document.querySelector('#modal-container').innerHTML = html;
+            
+        })
+};
 // display comments of a post
-const displayComments = comments => {
+const displayComments = (comments, postId) => {
     // if more than one comment, show a button and the last comment below button
     // otherwise show a single comment if it exists
     // also possible to show 0 comments
     let html = '';
     if (comments.length > 1) {
         html += `
-            <button class="link">view all ${comments.length} comments</button>
+            <button class="link" data-post-id="${postId}" onclick="showPostDetail(event)">view all ${comments.length} comments</button>
             `;
     }
     if (comments && comments.length > 0) {
@@ -96,7 +117,7 @@ const displayComments = comments => {
                 <strong>${ lastComment.user.username }</strong>
                 ${lastComment.text}
             </p>
-            <div>${lastComment.display_time}</div>
+            <div class="timestamp">${lastComment.display_time}</div>
             `
     }
     html += `
@@ -109,27 +130,6 @@ const displayComments = comments => {
     `
     return html
 };
-/*
-                <div class="comments">
-                    {% if post.get('comments')|length > 1 %}
-                        <p><button class="link">View all {{ post.get('comments')|length }} comments</button></p>
-                    {% endif %}
-                    {% for comment in post.get('comments')[:1] %}
-                        <p>
-                            <strong>{{ comment.get('user').get('username') }}</strong> 
-                            {{ comment.get('text') }}
-                        </p>
-                    {% endfor %}
-                    <p class="timestamp">{{ post.get('display_time') }}</p>
-                </div>
-            </div>
-            <div class="add-comment">
-                <div class="input-holder">
-                    <input type="text" aria-label="Add a comment" placeholder="Add a comment...">
-                </div>
-                <button class="link">Post</button>
-            </div>
-*/
 
 /*///////////////////////////////////////////////////////////////
                         Loading Page
