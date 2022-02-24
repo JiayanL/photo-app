@@ -32,6 +32,7 @@ const displayStories = () => {
 const likeUnlike = ev => {
     console.log('like button clicked')
 };
+
 const displayPosts = () => {
     fetch('/api/posts')
         .then(response => response.json())
@@ -82,6 +83,7 @@ const post2Html = post => {
 const destroyModal = ev => {
     document.querySelector('#modal-container').innerHTML = "";
 };
+
 // display modal view of a post after clicking view comments
 const showPostDetail = ev => {
     const postId = ev.currentTarget.dataset.postId;
@@ -132,11 +134,70 @@ const displayComments = (comments, postId) => {
 };
 
 /*///////////////////////////////////////////////////////////////
+                    SUGGESTIONS ASIDE
+//////////////////////////////////////////////////////////////*/
+
+// convert profile to html information
+const profile2Html = user => {
+    return `
+        <img src="${ user.thumb_url }" class="pic" alt="profile pic for ${ user.username }" />
+        <p><strong>${ user.username }</strong></p>
+    `;
+};
+
+// display profile information
+const displayProfile = () => {
+    fetch('/api/profile')
+        .then(response => response.json())
+        .then(profile => {
+            // console.log('profile is' + profile)
+            // const html = profile.map(profile2Html).join('\n');
+            const html = profile2Html(profile);
+            document.querySelector('.pic').innerHTML = html;
+    })
+};
+
+// converts suggestions to Html
+const suggestions2Html = user => {
+    return `
+        <section>
+            <img src="${ user.thumb_url }" class="pic" alt="profile pic for ${ user.username }" />
+            <div>
+                <p>${ user.username }</p>
+                <p>suggested for you</p> 
+            </div>
+            <div>
+                <button 
+                    class="link following"
+                    id = "follow-${user.id}"
+                    data-username="${user.username}"
+                    data-user-id="${user.id}"
+                    aria-checked="false"
+                    aria-label="Follow ${user.username}"
+                    onclick="toggleFollow(event)">follow
+                </button>
+            </div>
+        </section>
+    `;
+};
+
+// displays suggestions
+const displaySuggestions = () => {
+    fetch('/api/suggestions')
+        .then(response => response.json())
+        .then(suggestedUsers => {
+            const html = suggestedUsers.map(suggestions2Html).join('\n');
+            document.querySelector('.suggestions').innerHTML = html;
+        })
+};
+/*///////////////////////////////////////////////////////////////
                         Loading Page
 //////////////////////////////////////////////////////////////*/
 const initPage = () => {
     displayStories();
     displayPosts();
+    displayProfile();
+    displaySuggestions();
 };
 
 // invoke init page to display stories:
