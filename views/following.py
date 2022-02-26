@@ -57,20 +57,20 @@ class FollowingDetailEndpoint(Resource):
         try: 
             int(id)
         except:
-            return Response(json.dumps({'message': 'Error: Missing post id'}), mimetype="application/json", status=400)
+            return Response(json.dumps({'message': 'Error: Missing user id'}), mimetype="application/json", status=400)
         followed = Following.query.get(id)
          # check that id is valid
         if not followed:
-            return Response(json.dumps({'message': 'Invalid post - no text'}), mimetype="application/json", status=404)
+            return Response(json.dumps({'message': 'Invalid requset - no text'}), mimetype="application/json", status=404)
         # check that we are authorized to delete
         if not followed.user_id == self.current_user.id:
-            return Response(json.dumps({'message': 'Error: User cannot view post'}), mimetype="application/json", status=404)
+            return Response(json.dumps({'message': 'Error: User is not authorized to delete post'}), mimetype="application/json", status=404)
        
         
         Following.query.filter_by(id=id).delete()
         db.session.commit()
         serialized_data = {
-            'message': 'Post {0} successfully deleted.'.format(id)
+            'message': 'User {0} successfully unfollowed.'.format(id)
         }
         return Response(json.dumps(serialized_data), mimetype="application/json", status=200)
 

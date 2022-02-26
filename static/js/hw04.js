@@ -79,6 +79,10 @@ const post2Html = post => {
     `;
 };
 
+/*///////////////////////////////////////////////////////////////
+                            MODAL
+//////////////////////////////////////////////////////////////*/
+
 // close modal after hitting button
 const destroyModal = ev => {
     document.querySelector('#modal-container').innerHTML = "";
@@ -92,9 +96,17 @@ const showPostDetail = ev => {
         .then(post => {
             const html = `
                 <div class="modal-bg">
-                    <button onClick="destroyModal(event)">Close</button>
+                    <button onClick="destroyModal(event)"><i class="fas fa-3x fa-times"></i></button>
                     <div class="modal">
-                        <img src="${post.image_url}">
+                        <div class="img-container">
+                            <img src="${post.image_url}">
+                        </div>
+                        <div id="expanded-comments">
+                            <div id="modal-profile">
+                            </div>
+                            <div id="modal-comments">
+                            </div>
+                        </div>
                     </div>
                 </div>`;
             document.querySelector('#modal-container').innerHTML = html;
@@ -155,6 +167,67 @@ const displayProfile = () => {
             const html = profile2Html(profile);
             document.querySelector('.pic').innerHTML = html;
     })
+};
+
+// follow/unfollow the user
+const toggleFollow = ev => {
+    // console.log(ev)
+    // selects current target
+    const elem = ev.currentTarget;
+
+    // checks whether we're following, updates html and classes
+    if (elem.getAttribute('aria-checked').trim() === 'false') {
+        // issue post request to UI for new follower:
+        followUser(elem.dataset.userId, elem);
+
+    } else {
+        // unfollow request
+        unfollowUser(elem.dataset.followingId, elem);
+    }
+};
+
+// post request to issue
+const followUser = (userId, elem) => {
+    const postData = {
+        "user_id": userId
+    };
+    fetch("/api/following/", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // if post successful log data and flip unfollow
+            console.log(data);
+            elem.innerHTML = 'unfollow';
+            elem.classList.add('unfollow');
+            elem.classList.remove('follow');
+            // save id in event that we want to unfollow user
+            elem.setAttribute('data-following-id', data.id);
+            elem.setAttribute("aria-checked", "true");
+        });
+};
+
+const unfollowUser = (followingId, elem) => {
+    // issue a delete request
+    fetch(`/api/following/${followingId} `, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        elem.innerHTML = 'follow';
+        elem.classList.add('follow');
+        elem.classList.remove('unfollow');
+        elem.removeAttribute('data-following-id');
+        elem.setAttribute("aria-checked", "false")
+    });
 };
 
 // converts suggestions to Html

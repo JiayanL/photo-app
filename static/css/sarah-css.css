@@ -26,6 +26,15 @@ a, a:visited, a:hover, a:link {
 a:hover {
     color: #777;
 }
+
+button {
+    border: none;
+    outline: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
 button.link {
     color: rgb(44, 105, 155);
     background-color: transparent;
@@ -262,8 +271,9 @@ aside header .pic {
 
 .modal-bg button {
     position: fixed;
-    right: 20px;
-    top: 20px;
+    right: 30px;
+    top: 30px;
+    color: white;
 }
 
 .modal {
@@ -271,6 +281,17 @@ aside header .pic {
     width: 80vw;
     height: 80vh;
     border-radius: 5px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.img-container {
+    overflow: hidden;
+}
+
+.modal img {
+    height: 100%;
+    width: 100%;
 }
 
 @media (max-width: 700px) {
