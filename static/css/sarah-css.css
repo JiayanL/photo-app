@@ -294,6 +294,53 @@ aside header .pic {
     width: 100%;
 }
 
+#modal-profile .pic {
+    margin-left: 15px;
+    max-height: 50px;
+    max-width: 50px;
+    border: solid 2px #dbdbdb;
+    border-radius: 50px;
+}
+
+#modal-profile * {
+    margin-left: 5px;
+}
+
+#modal-profile {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: solid #D0D0D0 1px;
+    padding-bottom: 10px;
+}
+
+#modal-comments {
+    /* border: solid black 5px; */
+    height: 69vh;
+    overflow-y: auto;
+}
+
+/* #modal-comments * {
+    border: solid black 1px;
+} */
+
+.modal-comment {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+}
+
+.modal-comment img {
+    height: 30px;
+    width: 30px;
+    margin-left: calc((100% - 30px)/2);
+    border-radius: 30px;
+}
+
+.modal-comment p {
+    margin-top: 0;
+}
+
 @media (max-width: 700px) {
     .card, .stories {
         width: 90vw;

@@ -29,9 +29,6 @@ const displayStories = () => {
 // 1. Get the post data from the API endpoint (/api/posts?limit=10)
 // 2. When that data arrives, we're going to build a bunch of HTML cards (i.e. big long string)
 // 3. Update container and put html on the inside of it.
-const likeUnlike = ev => {
-    console.log('like button clicked')
-};
 
 const displayPosts = () => {
     fetch('/api/posts')
@@ -54,17 +51,31 @@ const post2Html = post => {
             <div class="info">
                 <div class="buttons">
                     <div>
-                        <button onclick="likeUnlike(event)">
-                            <i class="fa${ post.current_user_like_id ? 's' : 'r'} fa-heart"></i>
+                        <button 
+                            onclick="toggleLike(event)"
+                            data-post-id="${ post.id }"
+                            data-like-id="${ post.current_user_like_id }"
+                            aria-label="like for ${post.id}"
+                            aria-checked="${ post.current_user_like_id ? 'true' : 'false' }"
+                            >
+                            <i class="fa${ post.current_user_like_id ? 's' : 'r'} fa-lg fa-heart"></i>
                         </button>
                         <i class="far fa-comment"></i>
                         <i class="far fa-paper-plane"></i>
                     </div>
                     <div>
-                        <i class="fa${ post.current_user_bookmark_id ? 's' : 'r'} fa-bookmark"></i>
+                        <button
+                            onclick="toggleBookmark(event)"
+                            data-post-id="${ post.id }"
+                            data-bookmark-id="${ post.current_user_bookmark_id }"
+                            aria-label="bookmark button for ${post.id}>"
+                            aria-checked="${ post.current_user_bookmark_id ? 'true' : 'false'}"
+                            >
+                            <i class="fa${ post.current_user_bookmark_id ? 's' : 'r'} fa-lg fa-bookmark"></i>
+                        </button>
                     </div>
                 </div>
-                <p class="likes"><strong>${ post.likes.length } like${ post.likes.length != 1 ? 's' : '' }</strong></p>
+                <p class="likes" id="like${post.id}"><strong>${ post.likes.length } like${ post.likes.length != 1 ? 's' : '' }</strong></p>
                 <div class="caption">
                     <p>
                         <strong>${ post.user.username }</strong> 
@@ -78,6 +89,196 @@ const post2Html = post => {
         </section>
     `;
 };
+
+/*///////////////////////////////////////////////////////////////
+                        COMMENTING
+//////////////////////////////////////////////////////////////*/
+// display comments of a post
+const displayComments = (comments, postId) => {
+    // if more than one comment, show a button and the last comment below button
+    // otherwise show a single comment if it exists
+    // also possible to show 0 comments
+    let html = '';
+    if (comments.length > 1) {
+        html += `
+            <button class="link" data-post-id="${postId}" onclick="showPostDetail(event)">view all ${comments.length} comments</button>
+            `;
+    }
+    if (comments && comments.length > 0) {
+        const lastComment = comments[comments.length - 1]
+        html += `
+            <p>
+                <strong>${ lastComment.user.username }</strong>
+                ${lastComment.text}
+            </p>
+            <div class="timestamp">${lastComment.display_time}</div>
+            `
+    }
+    html += `
+        <div class="add-comment">
+            <div class="input-holder">
+                <input id="input-for-${ postId }" type="text" aria-label="Add a comment" placeholder="Add a comment...">
+            </div>
+            <button data-post-id="${postId}" data-comments="${comments}" onclick="postComment(event)" class="link">Post</button>
+        </div>
+    `
+    return html
+};
+
+const postComment = ev => {
+    const elem = ev.currentTarget;
+    const comment = document.querySelector(`#input-for-${ elem.dataset.postId }`).value;
+    console.log('posted a comment');
+    console.log(typeof comment);
+    console.log(typeof elem.dataset.postId);
+    const postData = {
+        "post_id": parseInt(elem.dataset.postId),
+        "text": comment
+    };
+    
+    fetch("/api/comments", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        });
+    // redraw comments
+    displayPosts();
+}
+
+/*///////////////////////////////////////////////////////////////
+                        POST BUTTONS
+//////////////////////////////////////////////////////////////*/
+
+// Likes
+const toggleLike = (ev) => {
+    console.log('user pressed like button')
+    // select current target
+    const elem = ev.currentTarget;
+    // check whether we've liked the post
+    if (elem.getAttribute('aria-checked') === 'false') {
+        likePost(elem.dataset.postId, elem);
+    } else {
+        unlikePost(elem.dataset.postId, elem, elem.dataset.likeId);
+    }
+    // update like count
+    displayPosts()
+};
+
+const likePost = (postId, elem) => {
+    const postData = {};
+
+    fetch(`/api/posts/${postId}/likes/`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // output response if post was uploaded successfully
+            console.log(data);
+            
+            // change styling of like button
+            const likeButton = elem.querySelector('i');
+            likeButton.classList.add('fas');
+            likeButton.classList.remove('far');
+            elem.setAttribute('aria-checked', 'true');
+            // store like id in post to delete
+            elem.setAttribute('data-like-id', data.id);
+        });
+};
+
+const unlikePost = (postId, elem, id) => {
+    // issue a delete request
+    fetch(`/api/posts/${ postId }/likes/${ id }`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        //send data if true
+        console.log(data);
+        // change styling of like button to unlike post
+        const likeButton = elem.querySelector('i');
+        likeButton.classList.add('far');
+        likeButton.classList.remove('fas');
+        elem.setAttribute('aria-checked', 'false')
+        // delete id
+        elem.setAttribute('data-like-id', '');
+    });
+};
+
+// Bookmarks
+const toggleBookmark = (ev) => {
+    console.log('user pressed bookmark button')
+    // select current target
+    const elem = ev.currentTarget;
+    // check whether we've liked the post
+    if (elem.getAttribute('aria-checked') === 'false') {
+        postBookmark(elem.dataset.postId, elem);
+    } else {
+        deleteBookmark(elem, elem.dataset.bookmarkId);
+    }
+};
+
+const postBookmark = (postId, elem) => {
+    const postData = {
+        "post_id": postId
+    };
+    
+    fetch("/api/bookmarks/", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // output response if post was uploaded successfully
+            console.log(data);
+            
+            // change styling of like button
+            const likeButton = elem.querySelector('i');
+            likeButton.classList.add('fas');
+            likeButton.classList.remove('far');
+            elem.setAttribute('aria-checked', 'true');
+            // store like id in post to delete
+            elem.setAttribute('data-bookmark-id', data.id);
+        });
+};
+
+const deleteBookmark = (elem, id) => {
+    // issue a delete request
+    fetch(`/api/bookmarks/${id}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        //send data if true
+        console.log(data);
+        // change styling of like button to unlike post
+        const likeButton = elem.querySelector('i');
+        likeButton.classList.add('far');
+        likeButton.classList.remove('fas');
+        elem.setAttribute('aria-checked', 'false')
+        // delete id
+        elem.setAttribute('data-bookmark-id', '');
+    });
+};
+
 
 /*///////////////////////////////////////////////////////////////
                             MODAL
@@ -103,8 +304,10 @@ const showPostDetail = ev => {
                         </div>
                         <div id="expanded-comments">
                             <div id="modal-profile">
+                                ${ displayModalProfile() }
                             </div>
                             <div id="modal-comments">
+                                ${ displayModalComments(post.comments) }
                             </div>
                         </div>
                     </div>
@@ -113,36 +316,44 @@ const showPostDetail = ev => {
             
         })
 };
-// display comments of a post
-const displayComments = (comments, postId) => {
-    // if more than one comment, show a button and the last comment below button
-    // otherwise show a single comment if it exists
-    // also possible to show 0 comments
-    let html = '';
-    if (comments.length > 1) {
+
+// profile picture
+const displayModalProfile = () => {
+    fetch('/api/profile')
+        .then(response => response.json())
+        .then(profile => {
+            // console.log('profile is' + profile)
+            // const html = profile.map(profile2Html).join('\n');
+            const html = modalProfile2Html(profile);
+            document.querySelector('#modal-profile').innerHTML = html;
+    })
+};
+
+const modalProfile2Html = user => {
+    return `
+        <img src="${ user.thumb_url }" class="pic" alt="profile pic for ${ user.username }" />
+        <p><strong>${ user.username }</strong></p>
+    `;
+};
+
+const displayModalComments = comments => {
+    html = ``;
+    for (let comment in comments) {
+        comment = comments[comment]
         html += `
-            <button class="link" data-post-id="${postId}" onclick="showPostDetail(event)">view all ${comments.length} comments</button>
-            `;
-    }
-    if (comments && comments.length > 0) {
-        const lastComment = comments[comments.length - 1]
-        html += `
-            <p>
-                <strong>${ lastComment.user.username }</strong>
-                ${lastComment.text}
-            </p>
-            <div class="timestamp">${lastComment.display_time}</div>
-            `
-    }
-    html += `
-        <div class="add-comment">
-            <div class="input-holder">
-                <input type="text" aria-label="Add a comment" placeholder="Add a comment...">
+        <div class="modal-comment">
+            <div>
+                <img src="${comment.user.thumb_url}">
             </div>
-            <button class="link">Post</button>
+            <div>
+                <p><strong>${comment.user.username}</strong> ${comment.text}</p>
+                <p><strong>${comment.display_time}</strong></p>
+            </div>
+            <i class="far fa-heart"></i>
         </div>
-    `
-    return html
+        `;
+    }
+    return html;
 };
 
 /*///////////////////////////////////////////////////////////////
