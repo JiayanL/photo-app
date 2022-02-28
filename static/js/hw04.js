@@ -285,14 +285,11 @@ const deleteBookmark = (elem, id) => {
 //////////////////////////////////////////////////////////////*/
 
 // close modal after hitting button
-const destroyModal = ev => {
-    const elem = ev.currentTarget;
-    const postId = elem.dataset.postid;
+const destroyModal = (ev, postId) => {
     document.querySelector('#modal-container').innerHTML = "";
     // sets focus to view all comments
     const viewElem = document.querySelector(`#view-comments-for-${postId}`);
     viewElem.focus();
-
 };
 
 // display modal view of a post after clicking view comments
@@ -303,7 +300,7 @@ const showPostDetail = ev => {
         .then(post => {
             const html = `
                 <div class="modal-bg">
-                    <button data-postId="${postId}" onClick="destroyModal(event)"><i class="fas fa-3x fa-times"></i></button>
+                    <button data-postId="${postId}" onClick="destroyModal(event, ${postId})"><i class="fas fa-3x fa-times"></i></button>
                     <div class="modal">
                         <div class="img-container">
                             <img src="${post.image_url}">
@@ -322,6 +319,11 @@ const showPostDetail = ev => {
             // sets focus
             elem = document.querySelector(".modal-bg button");
             elem.focus();
+            document.addEventListener('keyup', function(e) {
+                if (e.keyCode == 27) {
+                    destroyModal(event, postId);
+                }
+            });
         })
 };
 
