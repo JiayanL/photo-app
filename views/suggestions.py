@@ -4,7 +4,6 @@ from models import User, Following
 from . import get_authorized_user_ids
 import json
 
-
 class SuggestionsListEndpoint(Resource):
 
     def __init__(self, current_user):
