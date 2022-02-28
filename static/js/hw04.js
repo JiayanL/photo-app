@@ -101,7 +101,7 @@ const displayComments = (comments, postId) => {
     let html = '';
     if (comments.length > 1) {
         html += `
-            <button class="link" data-post-id="${postId}" onclick="showPostDetail(event)">view all ${comments.length} comments</button>
+            <button class="link" id="view-comments-for-${postId}" data-post-id="${postId}" onclick="showPostDetail(event)">view all ${comments.length} comments</button>
             `;
     }
     if (comments && comments.length > 0) {
@@ -286,7 +286,13 @@ const deleteBookmark = (elem, id) => {
 
 // close modal after hitting button
 const destroyModal = ev => {
+    const elem = ev.currentTarget;
+    const postId = elem.dataset.postid;
     document.querySelector('#modal-container').innerHTML = "";
+    // sets focus to view all comments
+    const viewElem = document.querySelector(`#view-comments-for-${postId}`);
+    viewElem.focus();
+
 };
 
 // display modal view of a post after clicking view comments
@@ -297,7 +303,7 @@ const showPostDetail = ev => {
         .then(post => {
             const html = `
                 <div class="modal-bg">
-                    <button onClick="destroyModal(event)"><i class="fas fa-3x fa-times"></i></button>
+                    <button data-postId="${postId}" onClick="destroyModal(event)"><i class="fas fa-3x fa-times"></i></button>
                     <div class="modal">
                         <div class="img-container">
                             <img src="${post.image_url}">
@@ -313,7 +319,9 @@ const showPostDetail = ev => {
                     </div>
                 </div>`;
             document.querySelector('#modal-container').innerHTML = html;
-            
+            // sets focus
+            elem = document.querySelector(".modal-bg button");
+            elem.focus();
         })
 };
 
@@ -349,7 +357,7 @@ const displayModalComments = comments => {
                 <p><strong>${comment.user.username}</strong> ${comment.text}</p>
                 <p><strong>${comment.display_time}</strong></p>
             </div>
-            <i class="far fa-heart"></i>
+            <a><i class="far fa-heart"></i></a>
         </div>
         `;
     }

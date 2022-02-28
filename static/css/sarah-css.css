@@ -341,6 +341,10 @@ aside header .pic {
     margin-top: 0;
 }
 
+.modal-comment a{
+    color: grey;
+}
+
 @media (max-width: 700px) {
     .card, .stories {
         width: 90vw;
