@@ -8,6 +8,7 @@ import os
 from models import db, User, ApiNavigator
 from views import bookmarks, comments, followers, following, \
     posts, profile, stories, suggestions, post_likes
+import datetime
 
 # new import statements:
 import flask_jwt_extended  
@@ -33,6 +34,9 @@ api = Api(app)
 # initialize JSON web token
 #JWT config variables and manager (add after app object created):
 app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET')
+
+# expire access tokens
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(seconds=10)
 app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
 app.config["JWT_COOKIE_SECURE"] = False
 jwt = flask_jwt_extended.JWTManager(app)
