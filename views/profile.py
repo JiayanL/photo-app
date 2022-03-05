@@ -12,7 +12,6 @@ class ProfileDetailEndpoint(Resource):
 
     def get(self):
         # Your code here:
-
         return Response(json.dumps(self.current_user.to_dict()), mimetype="application/json", status=200)
 
 
