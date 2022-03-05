@@ -2,7 +2,6 @@ from models import db, User, Post, Comment,  LikeComment, \
     LikePost, Bookmark, Following, Story
 import os
 import random
-from sqlalchemy import exc
 from flask import Flask
 from faker import Faker
 from datetime import datetime, timedelta
@@ -38,6 +37,23 @@ def generate_image(id:int=None, width:int=300, height:int=200):
         id=image_id, w=width, h=height
     )
 
+def _create_webdev_user():
+    # 1. generate fake user data
+    first_name = 'Webdev'
+    last_name = 'User'
+    username = 'webdev'
+    email = 'webdev@u.northwestern.edu'
+    
+    # 2. create a new user (DB object)
+    user = User(first_name, last_name, username, email,
+        image_url=generate_image(),
+        thumb_url= generate_image(width=30, height=30)
+    )
+    # 3. generate encrypted password:
+    user.password_plaintext = 'password'
+    user.set_password(user.password_plaintext)
+    return user
+
 def _create_user():
     # 1. generate fake user data
     profile = fake.simple_profile()
@@ -53,14 +69,12 @@ def _create_user():
         image_url=generate_image(),
         thumb_url= generate_image(width=30, height=30)
     )
-    # generate fake password:
-    password = fake.sentence(nb_words=3).replace(' ', '_').replace('.', '').lower()
-    
-    # terrible idea but we're just learning...
-    user.password_plaintext = password       
+    # generate fake password. In reality, never store passwords
+    # in plaintext, but useful when we're testing...
+    user.password_plaintext = fake.sentence(nb_words=3).replace(' ', '_').replace('.', '').lower()
     
     # encrypt fake password (how you should actually do it)...
-    user.set_password(fake.password(15, 25)) # encrypts password
+    user.set_password(user.password_plaintext) # encrypts password
     return user
 
 def _create_post(user):
@@ -111,7 +125,11 @@ def _create_comment(post, follower_ids):
         post.id
     )
 
-def create_users(n=30):
+def create_users(n=29):
+    user = _create_webdev_user()
+    users.append(user)
+    db.session.add(user)
+    db.session.commit()
     for _ in range(n):
         user = _create_user()
         users.append(user)
@@ -215,13 +233,6 @@ def create_comment_likes(comments):
             db.session.add(like)
             if len(auth_user_ids) == 0:
                 break
-    db.session.commit()
-
-def create_users(n=30):
-    for _ in range(n):
-        user = _create_user()
-        users.append(user)
-        db.session.add(user)
     db.session.commit()
 
 # creates all of the tables if they don't exist:
