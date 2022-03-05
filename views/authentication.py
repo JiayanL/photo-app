@@ -38,7 +38,7 @@ def login():
             if user.check_password(password):
                 print('the user is authenticated')
                 # create JWT access tokens to send back to user by encoding user ID in JWT
-                access_token = flask_jwt_extended.create_access_token(identity=username)
+                access_token = flask_jwt_extended.create_access_token(identity=user.id)
             
                 # Set the JWT cookies in the response
                 # redirect to home screen through response

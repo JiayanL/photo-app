@@ -8,6 +8,7 @@ import os
 from models import db, User, ApiNavigator
 from views import bookmarks, comments, followers, following, \
     posts, profile, stories, suggestions, post_likes
+import datetime
 
 # new import statements:
 import flask_jwt_extended  
@@ -57,6 +58,8 @@ post_likes.initialize_routes(api)
 profile.initialize_routes(api)
 stories.initialize_routes(api)
 suggestions.initialize_routes(api)
+
+# Initialize routes of 2 new views
 authentication.initialize_routes(app)
 token.initialize_routes(api)
 
@@ -64,7 +67,7 @@ token.initialize_routes(api)
 
 # Server-side template for the homepage:
 @app.route('/')
-# @decorators.jwt_or_login
+@decorators.jwt_or_login
 def home():
     return render_template(
         'starter-client.html', 
