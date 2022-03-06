@@ -11,7 +11,7 @@ class ProfileDetailEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
 
-    @flask_jwt_extended.jwt_required
+    @flask_jwt_extended.jwt_required()
     def get(self):
         # Your code here:
         return Response(json.dumps(self.current_user.to_dict()), mimetype="application/json", status=200)

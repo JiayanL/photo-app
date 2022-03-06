@@ -26,7 +26,7 @@ class TestLoginEndpoint(unittest.TestCase):
         # check that it redirected to the home screen:
         self.assertEqual(response.url, '{0}/'.format(root_url))
         self.assertTrue(response.status_code, 200)
-
+        
     def test_bad_username_does_not_redirect(self):
         url = '{0}/login'.format(root_url)
         form_data = {
