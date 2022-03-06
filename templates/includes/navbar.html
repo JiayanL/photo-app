@@ -2,7 +2,6 @@
     <h1>Photo App</h1>
     <ul>
         {% if user %}
-            <p>Success</p>
             <li>
                 {% if request.url_rule.endpoint == 'api_docs' %}
                     <a href="/">Home</a>

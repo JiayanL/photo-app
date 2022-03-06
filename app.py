@@ -84,7 +84,7 @@ def api_docs():
     navigator = ApiNavigator(flask_jwt_extended.current_user)
     return render_template(
         'api/api-docs.html', 
-        user=app.current_user,  #TODO: change to flask_jwt_extended.current_user
+        user=flask_jwt_extended.current_user,  #TODO: change to flask_jwt_extended.current_user
         endpoints=navigator.get_endpoints(),
         access_token=access_token,
         csrf=csrf,
