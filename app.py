@@ -32,7 +32,7 @@ api = Api(app)
 #JWT config variables and manager (add after app object created):
 app.config["JWT_SECRET_KEY"] = os.environ.get('JWT_SECRET')
 # Set expiration for JWT Access Token (defaults to 15 minutes)
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(seconds=30)
+# app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(seconds=30)
 app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
 app.config["JWT_COOKIE_SECURE"] = False
 jwt = flask_jwt_extended.JWTManager(app)

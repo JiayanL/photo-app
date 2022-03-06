@@ -12,6 +12,7 @@ class TestLogoutEndpoint(unittest.TestCase):
     def test_successful_logout_redirects_to_login_screen(self):
         url = '{0}/logout'.format(root_url)
         response = requests.get(url)
+        print(response.url)
 
         # check that it redirected to the home screen:
         self.assertEqual(response.url, '{0}/login'.format(root_url))

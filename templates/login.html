@@ -55,8 +55,10 @@
             <div class="error">{{ message }}</div>
         {% endif %}
 
-        <input name="username" type="text" placeholder="Username"/>
-        <input name="password" type="password" placeholder="Password"/>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" placeholder="Username"/>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Password"/>
         <button type="submit">Login</button>
 
     </form> 
