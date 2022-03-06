@@ -4,6 +4,7 @@ from models import Bookmark, db
 import json
 from . import can_view_post
 from my_decorators import check_ownership_of_bookmark, handle_db_insert_error, secure_method
+import flask_jwt_extended
 
 class BookmarksListEndpoint(Resource):
     # 1. List all Resources
@@ -12,6 +13,7 @@ class BookmarksListEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
     
+    @flask_jwt_extended.jwt_required()
     def get(self):
         '''
         Goal is to only show the bookmarks that are associated with the current user. Approach:
@@ -28,7 +30,7 @@ class BookmarksListEndpoint(Resource):
         ]
         return Response(json.dumps(bookmark_list_of_dictionaries), mimetype="application/json", status=200)
 
-    
+    @flask_jwt_extended.jwt_required()
     @handle_db_insert_error
     def post(self):
         '''
@@ -63,12 +65,14 @@ class BookmarksListEndpoint(Resource):
         # create model instance
         return Response(json.dumps(bookmark.to_dict()), mimetype="application/json", status=201)
 
+
 class BookmarkDetailEndpoint(Resource):
     # 1. PATCH (updating), GET (individual bookmarks), DELETE (individual bookmarks)
     # 2. Create a new bookmark
     def __init__(self, current_user):
         self.current_user = current_user
-    
+
+    @flask_jwt_extended.jwt_required()
     def delete(self, id):
         # Check that id is valid
         try:
@@ -96,12 +100,12 @@ def initialize_routes(api):
         BookmarksListEndpoint, 
         '/api/bookmarks', 
         '/api/bookmarks/', 
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )
 
     api.add_resource(
         BookmarkDetailEndpoint, 
         '/api/bookmarks/<id>', 
         '/api/bookmarks/<id>',
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )

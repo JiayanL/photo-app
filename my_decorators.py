@@ -195,7 +195,7 @@ def handle_db_insert_error(endpoint_function):
             print(db_message)                   # logs it to the console
             message = 'Database Insert error. Make sure your post data is valid.'
             post_data = request.get_json()
-            post_data['user_id'] = self.current_user.id
+            # post_data['user_id'] = self.current_user.id
             response_obj = {
                 'message': message, 
                 'db_message': db_message,

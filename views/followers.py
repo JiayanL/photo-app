@@ -6,6 +6,7 @@ import json
 
 from sqlalchemy import and_
 from views import get_authorized_user_ids
+import flask_jwt_extended
 
 def get_path():
     return request.host_url + 'api/posts/'
@@ -14,6 +15,7 @@ class FollowerListEndpoint(Resource):
     def __init__(self, current_user):
         self.current_user = current_user
     
+    @flask_jwt_extended.jwt_required()
     def get(self):
         # Goal: Generate list of user objects representing list of users who are following the current user
         # Select all users from the users table where their user_id corresponds to a following_id of the current user
@@ -35,5 +37,5 @@ def initialize_routes(api):
         FollowerListEndpoint, 
         '/api/followers', 
         '/api/followers/', 
-        resource_class_kwargs={'current_user': api.app.current_user}
+        resource_class_kwargs={'current_user': flask_jwt_extended.current_user}
     )
