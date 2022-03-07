@@ -24,7 +24,7 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False    
-
+app.config['PROPAGATE_EXCEPTIONS'] = True 
 
 db.init_app(app)
 api = Api(app)
